@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
@@ -6,6 +6,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-feedback-and-chat',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './feedback-and-chat.component.html',
   styleUrls: ['./feedback-and-chat.component.css']
 })
@@ -24,5 +25,13 @@ export class FeedbackAndChatComponent {
     console.log('Your feedback has been submitted', this.contactForm.value);
     this.showMsg = true;
     this.contactForm.reset();
+  }
+
+  ngOnInit() {
+    // Load the chat script, which activates the `<df-messenger>` element.
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.gstatic.com/dialogflow-console/fast/messenger-cx/bootstrap.js?v=1';
+    document.head.appendChild(script);
   }
 }
